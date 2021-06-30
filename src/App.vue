@@ -1,15 +1,19 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
+    <main-tab-bar></main-tab-bar>
   </div>
 </template>
 
 <script>
+import MainTabBar from "./components/content/maintabbar";
 export default {
   name: "App",
-  components: {},
+  components: {
+    MainTabBar,
+  },
 };
 </script>
 
 <style>
+@import "./assets/css/base.css";
 </style>

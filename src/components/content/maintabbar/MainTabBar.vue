@@ -47,8 +47,8 @@
   </tab-bar>
 </template>
 <script>
-import TabBar from "./TabBar/tabbar";
-import tabbaritem from "./TabBar/tabbarItem";
+import TabBar from "../../common/TabBar/tabbar.vue";
+import tabbaritem from "../../common/TabBar/tabbarItem";
 export default {
   components: {
     TabBar,

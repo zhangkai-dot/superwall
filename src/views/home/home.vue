@@ -6,6 +6,8 @@
       ref="scroll"
       :probe-type="3"
       @scroll="contentScroll"
+      :pull-up-load="true"
+      @pullingUp="loadMore"
     >
       <home-swiper :banners="banners"></home-swiper>
       <recommends :recommends="recommends"></recommends>
@@ -74,6 +76,7 @@ export default {
         // console.log(res);
         this.banners = res.data.data.banner.list;
         this.recommends = res.data.data.recommend.list;
+        console.log(res.data.data.recommend.list[0]);
       });
     },
     getHomeGoods(type) {
@@ -82,6 +85,7 @@ export default {
         this.goods[type].list.push(...res.data.data.list);
         this.goods[type].page += 1;
         // console.log(res.data.data.list);
+        this.$refs.scroll.finishPullUp();
       });
     },
     //事件监听相关的方法
@@ -103,6 +107,10 @@ export default {
     },
     contentScroll(position) {
       this.isBackTopShow = -position.y > 1000;
+    },
+    loadMore() {
+      this.getHomeGoods(this.currentType);
+      this.$refs.scroll.scroll.refresh();
     },
   },
 };

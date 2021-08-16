@@ -1,6 +1,7 @@
 <template>
   <div class="detail">
     <h2>{{ id }}</h2>
+    <h2></h2>
   </div>
 </template>
 

@@ -23,7 +23,7 @@
       <recommends :recommends="recommends"></recommends>
       <feature></feature>
       <tabcontrol
-        :titles="['流行', '新款', '精选']"
+        :titles="['v  ', '新款', '精选']"
         @tabclick="tabclick"
         ref="tabControl2"
       ></tabcontrol>

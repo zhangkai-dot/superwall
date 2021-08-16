@@ -36,4 +36,5 @@ const router = new VueRouter({
   routes,
   mode: "history"
 });
+console.log("234");
 export default router;

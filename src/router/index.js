@@ -28,7 +28,7 @@ const routes = [
     component: profile
   },
   {
-    path: "/detail/:id",
+    path: "/detail/:iid",
     component: Detail
   }
 ];
@@ -36,5 +36,4 @@ const router = new VueRouter({
   routes,
   mode: "history"
 });
-console.log("234");
 export default router;

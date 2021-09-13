@@ -7,6 +7,12 @@ export function getDetail(iid) {
     }
   });
 }
+export function getRecommend() {
+  return request({
+    url: "/recommend"
+  });
+}
+
 export class Goods {
   constructor(itemInfo, columns, services) {
     this.title = itemInfo.title;
@@ -27,5 +33,12 @@ export class Shop {
     this.cGoods = shopInfo.cGoods;
     this.cSells = shopInfo.cSells;
     this.score = shopInfo.score;
+  }
+}
+export class GoodsParams {
+  constructor(info, rule) {
+    this.Image = info.Image ? info.Image[0] : "";
+    this.infos = info.set;
+    this.sizes = rule.tables;
   }
 }

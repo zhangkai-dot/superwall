@@ -41,9 +41,8 @@ import Feature from "./childComps/FeatureView.vue";
 import tabcontrol from "components/content/tabcontrol/TabControl";
 import GoodList from "components/content/goods/GoodList";
 import Scroll from "components/common/scroll/Scroll";
-import BackTop from "components/content/backTop/BackTop";
 import { getHomeMultidata, getHomeGoods } from "network/home";
-import { debounce } from "common/utils.js";
+import { itemListenerMixin, backTopMixin } from "common/mixin.js";
 export default {
   components: {
     NavBar,
@@ -53,8 +52,8 @@ export default {
     tabcontrol,
     GoodList,
     Scroll,
-    BackTop,
   },
+  mixins: [itemListenerMixin, backTopMixin],
   data() {
     return {
       banners: [],
@@ -64,8 +63,7 @@ export default {
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] },
       },
-      currentType: "pop",
-      isBackTopShow: false,
+      currentType: "pop", 
       taboffsetTop: 0,
       isTabFixed: false,
       saveY: 0,
@@ -78,18 +76,17 @@ export default {
     this.getHomeGoods("sell");
   },
   mounted() {
-    const refresh = debounce(this.$refs.scroll.refresh, 200);
-    //监听item中的图片加载完成
-    this.$bus.$on("itemImageLoad", () => {
-      refresh();
-    });
+    this.tabclick(0);
   },
   activated() {
     this.$refs.scroll.scrollTo(0, this.saveY, 0);
     this.$refs.scroll.refresh();
   },
   deactivated() {
+    //1.保存y的值
     this.saveY = this.$refs.scroll.getscrollY();
+    //2.取消全局事件的监听
+    this.$bus.$off("itemImageLoad", this.itemImgListener);
   },
   computed: {
     showGoods() {
@@ -129,11 +126,12 @@ export default {
           this.currentType = "sell";
           break;
       }
-      // this.$refs.tabcontrol1.currentIndex = index;
-      // this.$refs.tabcontrol2.currentIndex = index;
-    },
-    backclick() {
-      this.$refs.scroll.scrollTo(0, 0, 500);
+      this.$refs.tabControl1.currentIndex = index;
+      this.$refs.tabControl2.currentIndex = index;
+      // if (this.$refs.tabControl1 !== undefined) {
+      //   this.$refs.tabControl1.currentIndex = index;
+      //   this.$refs.tabControl2.currentIndex = index;
+      // }
     },
     contentScroll(position) {
       //1.判断BackTo是否显示

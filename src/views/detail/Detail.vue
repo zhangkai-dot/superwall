@@ -18,6 +18,7 @@
       <good-list :goods="recommends" ref="recommends" />
     </scroll>
     <back-top @click.native="backclick" v-show="isBackTopShow" />
+    <!-- <toast :v-show="show" /> -->
   </div>
 </template>
 
@@ -41,6 +42,7 @@ import GoodList from "components/content/goods/GoodList.vue";
 import { itemListenerMixin, backTopMixin } from "common/mixin.js";
 import { debounce } from "common/utils.js";
 import DetailBottomBar from "./childComps/DetailBottomBar.vue";
+// import Toast from "components/common/toast/toast.vue";
 export default {
   name: "Detail",
   components: {
@@ -54,6 +56,7 @@ export default {
     DetailCommentInfo,
     GoodList,
     DetailBottomBar,
+    // Toast,
   },
   mixins: [itemListenerMixin, backTopMixin],
   data() {
@@ -117,7 +120,9 @@ export default {
       product.desc = this.goods.desc;
       //2.将商品添加到购物车
       // this.$store.commit("addCart", product);
-      this.$store.dispatch("addCart", product);
+      this.$store.dispatch("addCart", product).then((res) => {
+        this.$toast.show(res, 2000);
+      });
     },
   },
   created() {
